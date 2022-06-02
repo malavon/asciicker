@@ -13,6 +13,9 @@ typedef SOCKET TCP_SOCKET;
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
 #include <unistd.h>
 #include <netdb.h>
 #include <pthread.h> // compile with -pthread

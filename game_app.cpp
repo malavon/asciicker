@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
 #include <sys/ioctl.h>
 #include <sys/poll.h>
 #include <fcntl.h>
@@ -71,7 +71,7 @@ const char* GetConfPath()
 {
 	if (conf_path[0] == 0)
 	{
-		#if defined(__linux__) || defined(__APPLE__)
+		#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
         const char* user_dir = getenv("SNAP_USER_DATA");
         if (!user_dir || user_dir[0]==0)
         {
@@ -98,7 +98,7 @@ const char* GetConfPath()
 	return conf_path;
 }
 
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
 /*
 https://superuser.com/questions/1185824/configure-vga-colors-linux-ubuntu
 https://int10h.org/oldschool-pc-fonts/fontlist/
@@ -1032,7 +1032,7 @@ GameServer* Connect(const char* addr, const char* port, const char* path, const 
 
 extern "C" void DumpLeakCounter();
 
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
 
 static int find_tty()
 {
@@ -1246,7 +1246,7 @@ int scan_js(char* gamepad_name, int* gamepad_axes, int* gamepad_buttons, uint8_t
 
 bool read_js(int fd)
 {
-    #ifdef __linux__
+        #ifdef __linux__
         #define MAX_JS_READ 64
         js_event js_arr[MAX_JS_READ];
         int size = read(fd, js_arr, sizeof(js_event)*MAX_JS_READ);
@@ -1313,7 +1313,7 @@ int main(int argc, char* argv[])
     else
     {
         size_t len = 0;
-        #if defined(__linux__) || defined(__APPLE__)
+        #if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
         abs_path = realpath(argv[0], abs_buf);
         char* last_slash = strrchr(abs_path, '/');
         if (!last_slash)
@@ -1494,7 +1494,7 @@ int main(int argc, char* argv[])
             gs = Connect(addr, port, path, user);
             if (!gs)
             {
-                printf("Couldn't connect to server, starting solo ...\n");
+                printf("Couldn't connect to server %S, starting solo ...\n", addr);
             }
         }
 
@@ -1656,7 +1656,7 @@ int main(int argc, char* argv[])
 
 #endif // #ifndef PURE_TERM
 
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
 
     // recursively check if we are on TTY console or 'vt'
     const char* term_env = getenv("TERM");

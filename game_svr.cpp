@@ -8,7 +8,7 @@
 #include "game.h"
 #include "network.h"
 
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
 #ifdef __linux__
 #include <linux/limits.h>
 #else
@@ -963,7 +963,7 @@ int main(int argc, char* argv[])
         size_t len = 2;
 		strcpy(abs_buf, "./");
 		abs_path = abs_buf;
-		#if defined(__linux__) || defined(__APPLE__)
+		#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
         abs_path = realpath(argv[0], abs_buf);
         char* last_slash = strrchr(abs_path, '/');
         if (last_slash)

@@ -23,7 +23,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #endif
-#ifdef __linux__
+#if defined (__linux__) || defined(__FreeBSD__)
 #include <GL/gl.h>
 #elif defined(__APPLE__) 
 #include <OpenGL/gl.h>
@@ -1167,7 +1167,7 @@ void a3dSwitchContext(const A3D_WND* wnd)
 	SDL_GL_MakeCurrent(wnd->win, wnd->rc);
 }
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__ || defined __APPLE__ || defined(__FreeBSD__)
 #include <dirent.h>
 #include <unistd.h>
 

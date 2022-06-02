@@ -52,13 +52,13 @@ $(shell mkdir -p $(dir $(OBJS)) >/dev/null)
 $(shell mkdir -p $(dir $(DEPS)) >/dev/null)
 
 # C compiler
-CC := gcc
+CC := cc
 
 # C++ compiler
-CXX := g++
+CXX := c++
 
 # linker
-LD := g++
+LD := c++
 
 # tar
 TAR := tar
@@ -70,13 +70,13 @@ CFLAGS :=
 CXXFLAGS := 
 
 # C/C++ flags
-CPPFLAGS := -save-temps=obj -pthread -DGAME -O3 -DUSE_SDL
+CPPFLAGS := -save-temps=obj -pthread -DGAME -O3 -DUSE_SDL -I/usr/local/include -Wno-constant-conversion
 # CPPFLAGS := -g -save-temps=obj -pthread -DGAME -O3
 # CPPFLAGS := -g -save-temps=obj -pthread -DGAME
 # CPPFLAGS := -g -save-temps=obj -pthread -DGAME -fsanitize=address
 
 # linker flags
-LDFLAGS := -save-temps=obj -pthread -O3
+LDFLAGS := -save-temps=obj -pthread -O3 -L/usr/local/lib
 # LDFLAGS := -g -save-temps=obj -pthread -O3
 # LDFLAGS := -g -save-temps=obj -pthread
 # LDFLAGS := -g -save-temps=obj -pthread -fsanitize=address
@@ -137,28 +137,28 @@ $(BIN): $(OBJS)
 
 $(OBJDIR)/%.o: %.c
 $(OBJDIR)/%.o: %.c $(DEPDIR)/%.d
-	@echo Comiling $<
+	@echo Compiling $<
 	@$(PRECOMPILE)
 	@$(COMPILE.c) $<
 	@$(POSTCOMPILE)
 
 $(OBJDIR)/%.o: %.cpp
 $(OBJDIR)/%.o: %.cpp $(DEPDIR)/%.d
-	@echo Comiling $<
+	@echo Compiling $<
 	@$(PRECOMPILE)
 	@$(COMPILE.cc) $<
 	@$(POSTCOMPILE)
 
 $(OBJDIR)/%.o: %.cc
 $(OBJDIR)/%.o: %.cc $(DEPDIR)/%.d
-	@echo Comiling $<
+	@echo Compiling $<
 	@$(PRECOMPILE)
 	@$(COMPILE.cc) $<
 	@$(POSTCOMPILE)
 
 $(OBJDIR)/%.o: %.cxx
 $(OBJDIR)/%.o: %.cxx $(DEPDIR)/%.d
-	@echo Comiling $<
+	@echo Compiling $<
 	@$(PRECOMPILE)
 	@$(COMPILE.cc) $<
 	@$(POSTCOMPILE)
